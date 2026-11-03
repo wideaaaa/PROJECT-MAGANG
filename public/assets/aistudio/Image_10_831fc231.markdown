@@ -1,0 +1,244 @@
+---
+name: Sistem Insentif Keagamaan Bandulan
+colors:
+  surface: '#faf8ff'
+  surface-dim: '#d2d9f4'
+  surface-bright: '#faf8ff'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#f2f3ff'
+  surface-container: '#eaedff'
+  surface-container-high: '#e2e7ff'
+  surface-container-highest: '#dae2fd'
+  on-surface: '#131b2e'
+  on-surface-variant: '#3e4947'
+  inverse-surface: '#283044'
+  inverse-on-surface: '#eef0ff'
+  outline: '#6e7977'
+  outline-variant: '#bdc9c6'
+  surface-tint: '#006a63'
+  primary: '#005c55'
+  on-primary: '#ffffff'
+  primary-container: '#0f766e'
+  on-primary-container: '#a3faef'
+  inverse-primary: '#80d5cb'
+  secondary: '#904d00'
+  on-secondary: '#ffffff'
+  secondary-container: '#fe932c'
+  on-secondary-container: '#663500'
+  tertiary: '#005683'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#006fa8'
+  on-tertiary-container: '#dbecff'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#9cf2e8'
+  primary-fixed-dim: '#80d5cb'
+  on-primary-fixed: '#00201d'
+  on-primary-fixed-variant: '#00504a'
+  secondary-fixed: '#ffdcc3'
+  secondary-fixed-dim: '#ffb77d'
+  on-secondary-fixed: '#2f1500'
+  on-secondary-fixed-variant: '#6e3900'
+  tertiary-fixed: '#cce5ff'
+  tertiary-fixed-dim: '#93ccff'
+  on-tertiary-fixed: '#001d31'
+  on-tertiary-fixed-variant: '#004b73'
+  background: '#faf8ff'
+  on-background: '#131b2e'
+  surface-variant: '#dae2fd'
+typography:
+  headline-xl:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 36px
+    fontWeight: '700'
+    lineHeight: 44px
+    letterSpacing: -0.02em
+  headline-xl-mobile:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 28px
+    fontWeight: '700'
+    lineHeight: 36px
+    letterSpacing: -0.01em
+  headline-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 28px
+    fontWeight: '700'
+    lineHeight: 36px
+    letterSpacing: -0.015em
+  headline-lg-mobile:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 22px
+    fontWeight: '700'
+    lineHeight: 30px
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 20px
+    fontWeight: '600'
+    lineHeight: 28px
+    letterSpacing: -0.01em
+  headline-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 16px
+    fontWeight: '600'
+    lineHeight: 24px
+  body-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 16px
+    fontWeight: '400'
+    lineHeight: 26px
+  body-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 14px
+    fontWeight: '400'
+    lineHeight: 22px
+  body-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 12px
+    fontWeight: '400'
+    lineHeight: 18px
+  label-lg:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 14px
+    fontWeight: '600'
+    lineHeight: 20px
+    letterSpacing: 0.01em
+  label-md:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 12px
+    fontWeight: '600'
+    lineHeight: 16px
+    letterSpacing: 0.02em
+  label-sm:
+    fontFamily: Plus Jakarta Sans
+    fontSize: 11px
+    fontWeight: '700'
+    lineHeight: 14px
+    letterSpacing: 0.04em
+rounded:
+  sm: 0.25rem
+  DEFAULT: 0.5rem
+  md: 0.75rem
+  lg: 1rem
+  xl: 1.5rem
+  full: 9999px
+spacing:
+  gutter: 1.5rem
+  gutter-mobile: 1rem
+  margin: 2rem
+  margin-mobile: 1rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2rem
+---
+
+## Brand & Style
+The brand personality embodies modern civic administration: respectful, transparent, orderly, and warmly inclusive (*mengayomi*). Serving religious community educators across diverse faithp %İ\H™ØZšH
+KÓXY˜\ØZ
+H[™İ\HÙZÛÛZZ[™Ùİx %[ˆÙ[\˜Z[ˆ˜[™[[‹ÛİHX[[™ËHš\İX[[™İXYÙH˜[[˜Ù\È][šXÚ\[]]Üš]HÚ]Ü˜\ÜË\›ÛİÈYÛš]K‚‚•H\ÚYÛˆ[İ™[Y[ÛÛXš[™\È
+ŠÛÜœÜ˜]H[Ù\›ŠŠˆÚ]šXÈÛ\š]HÚ]
+Š•Ø\›H[X[š\İRJŠ‚‹HYÚÛ\š]H[ˆÜ\˜][Û˜[›İÜÈ
+]H™\šYšXØ][Û‹\Ø\œÙ[Y[›ÙÜ™\ÜËY[]HÚXÚÜÊK‚‹H[ˆ\›ØXÚX›KÙ[ÛÛZ[™È][ÜÜ\™H]™YXÙ\ÈYZ[š\İ˜]]™H[[ZY][Ûˆ›Üˆ™ZYÚ›ÜšÛÙ[\œÈ[™XXÚ\œË‚‹HŞ\İ[X]XÈÜ™\ˆ[œÜ\™YHÛX[ˆÛİXÚ[™[œİ]][Û˜[˜[œÜ\™[˜ŞK]›ÚY[™ÈÛÛ\™X]XÜ˜XŞH›İYÚØ\›HÛ˜[˜[[˜Ù\Ë‚‚ˆÈÈÛÛÜœÂ•H[]HÜ›İ[™ÈH][šXÚ\[Ù\šXÙH[ˆ[YÜš]KÚ]šXÈØ\™K[™ÛÛ[][˜[\İ‚‚‹H
+Š”š[X\HX[
+ÌÍ‘Xİ™\ˆÌM
+JŠˆ™\™\Ù[ÈÚ]šXÈİ]Ø\™Ú\[Ü˜[YXØ][Û‹[™[œİ]][Û˜[İXš[]Kˆ\ÙY›ÜˆÙ^H[\˜Xİ]™HšYÙÙ\œËš[X\Hœ˜[™[™Ë˜]šYØ][ÛˆXİ]™Hİ]\Ë[™\›İ™Yİ]\È[™XØ]ÜœË‚‹H
+Š”ÙXÛÛ™\H[X™\ˆ
+ÑMÍÌ˜XØÙ[ÑNQL˜
+JŠˆ™\™\Ù[ÈÜ˜]]YKÛ›Ü˜\š][H\Ø\œÙ[Y[™XÛÙÛš][Û‹[™[™[™È™\šYšXØ][ÛˆİYÙ\Ëˆ\ÙYÜ\š[™ÛH›Üˆ\Ø\œÙ[Y[˜YÙ\Ë[\˜[›™\œË[™YÚ\š[Üš]HXİ[ÛˆİY\Ë‚‹H
+Š•\X\HŞX[‹Ğ›YH
+ÌÍØ
+JŠˆ\ÚYÛ˜]\ÈÜ›ÜÜËZ[œİ]][Û˜[Ş[˜Ú[™È
+ZØØ\[’RÈÚXÚÜË•ËÔ•›Û™HX\šÙ\œË[™˜[šÚ[™È™XÛÜ™ÊK‚‹H
+Š”İ\™˜XÙH	ˆ˜XÚÙÜ›İ[™ÊŠ‚ˆHXZ[ˆØ[˜\ÎˆÛÙÛ]H[
+ÑQØ
+HÈZ[š[Z^™HÛ\™H\š[™È^[™Y™\šYšXØ][ÛˆÙ\ÜÚ[ÛœË‚ˆHØ\™	ˆİ\™˜XÙ\Îˆ\™HÜš\ÜÚ]H
+Ñ‘‘‘‘‘˜
+HÚ]İXHÛ]H›Ü™\œÈ
+ÑL‘NŒ
+K‚ˆH^š[X\NˆY\Û]HÛ]KNL
+ÌŒMÌX
+H[œİ\™\ÈĞĞQÈPPHÛÛ\X[˜ÙHYØZ[œİÚ]Hİ\™˜XÙ\Ë‚ˆH^ÙXÛÛ™\Nˆ]]YÛ]KML
+ÍÍ˜
+H›Üˆ[\ˆ^È[™X[\ˆY]Y]K‚‚ˆÈÈ\ÙÜ˜\B”\È˜ZØ\HØ[œÈØ\ÈÙ[XİY›Üˆ]ÈÛÛ[\Ü˜\HÙ[ÛY]šXÈ˜[[˜ÙK[X[š\İÜ[ˆÛİ[\œË[™YÚYÚXš[]HXÜ›ÜÜÈX[\ˆ™XÛÜ™ËY[]H[X™\œÈ
+’RËÓ’T
+K[™[™Û™\ÚX[ˆYZ[š\İ˜]]™H›ØØX[\K‚‚‹H
+Š’XY[™\ÊŠˆÙ][ˆÙZYÚÈŒ[™ÌÚ]ÛYÚ™YØ]]™H˜XÚÚ[™È›ÜˆÚ\œY]ÜšX[]]Üš]K‚‹H
+Š“[X™\œÈ	ˆ]H˜[Y\ÊŠˆİ[™\™X[\ˆšYİ\™\È\™H[™›Ü˜ÙYXÜ›ÜÜÈ[Û™]\Hİ\[™È
+\XZ˜[Y\ÊH[™\Ø\œÙ[Y[›ÙÜ™\ÜÈÛİ[\œË‚‹H
+Š“X™[È	ˆ˜YÙ\ÊŠˆÛX[Ø\Ëİ\\˜Ø\ÙHİ[[™ÈÚ]ÜÚ]]™H]\‹\ÜXÚ[™È
+Œ™[HHŒ[X
+H™\Ù\™YİšXİH›Üˆİ]\ÈÚ\È
+K™Ë‹T•‘T’Q’RĞTÒX“ÔÑTÈĞRT˜ÑRÓÓRRS‘ÑÕX
+K‚‚ˆÈÈ^[İ]	ˆÜXÚ[™Â•H^[İ]›ÛİÜÈH™\ÜÛœÚ]™HL‹XÛÛ[[ˆÜšYŞ\İ[HİXİ\™Y›ÜˆÜ\˜][Û˜[İ™\œÚYÚ[™ÛX\ˆš\İX[]Y][™Ë‚‚‹H
+Š‘\ÚİÜ
+8¢iHL
+JŠˆL‹XÛÛ[[ˆ^[İ]Ú]X\™Ú[ˆœ™[X[™İ]\ˆK\™[XˆX^ÚYÛÛZ[™\ˆš^Y]M›ÜˆÛÛY›ÜX›HYZ[š\İ˜]]™H™]šY]Ë‚‹H
+Š•X›]
+ÍHLÎ\
+JŠˆXÛÛ[[ˆ^[İ]Ú]X\™Ú[ˆK\™[X[™İ]\ˆKŒ\™[XˆÚYKXK\ÚYH™\šYšXØ][Ûˆ[™[ÈÛÛ\ÙH[ÈİXİ\™Y™\XØ[XœË‚‹H
+Š“[Øš[H
+Í
+JŠˆXÛÛ[[ˆ^[İ]Ú]X\™Ú[‹[[Øš[Nˆ\™[X[™İ]\‹[[Øš[Nˆ\™[Xˆ]HÜšYÈ˜[œÙ›Ü›H[ÈİXÚÙYXXÚ\ˆ›Ùš[HØ\™Ë‚‹H
+ŠÛÛ\Û™[š]JŠˆ[\›˜[Ø\™Y[™ÜÈ\ÙHÜXÙK[Ø
+
+H›Üˆİ[[X\šY\ËÚ[H[œÙH]H›İÜÈ™[HÛˆÜXÙK[Y
+Mœ
+H™\XØ[ÜXÚ[™Ë‚‚ˆÈÈ[]˜][Ûˆ	ˆ\•\È\ÚYÛˆŞ\İ[H]›ÚYÈİYÚÙ][Û[ÜœXÈ›ÜÚYİÜÈ[ˆ˜]›ÜˆÙˆ
+Š•Û˜[^Y\œÈÚ]ÛÙ[XšY[Y™\Ú[ÛœÊŠ‹›İšY[™ÈÛX[ˆ[[™X][Ûˆ[™\ˆ\XØ[Ù™šXÙH›[Ü™\ØÙ[YÚ[™È[™[Øš[HØÜ™Y[ˆÛÛ™][ÛœÎ‚‚‹H
+Š”İ\™˜XÙH˜\ÙJŠˆÑQØ›]Ø[˜\Ë‚‹H
+ŠØ\™Y\ˆ
+]™[JJŠˆÜš\ÜÑ‘‘‘‘‘˜İ\™˜XÙH›Ü™\™YHH\ÛÛ[[İ\Èİ›ÚÙH
+ÑL‘NŒ
+HÚ][ˆ[˜K\ÛÙ[XšY[ÚYİÎˆ\Ü™Ø˜JMKŒË‹Œ
+KLœ™Ø˜JMKŒË‹ŒÊX‚‹H
+Š”˜Z\ÙY[\˜Xİ]™HY\ˆ
+]™[ˆHİ™\‹Ñ›ÜİÛœÊJŠˆ™Ø˜JMKLNLLŒ
+X[›ÙXÚ[™ÈHİXHš[X\HX[[™\Û™HÈ[\\Ú^™HXİ]™H\Ù\ˆ[[‚‹H
+Š“[Ù[Èİ™\›^HY\ˆ
+]™[ÊJŠˆŒ™Ø˜JMKŒË‹ŒLŠX[˜ÚÜ™YHH	HÜXÚ]HÛ]H˜XÚÙ›Ü›\ˆ
+˜XÚÙ›ÜX›\‹\ÛX
+K‚‚ˆÈÈÚ\\ÂH›İ[™Y™\ÜÈ˜XİÜˆÙˆ˜›İšY\ÈH™X\Üİ\š[™Ë\›ØXÚX›HİXÚÚ[H™\Ù\š[™ÈÚ]šXÈšYÛÜ‹ˆ‚‹H
+Š”š[X\HÛÛZ[™\ˆ[š]È
+Ø\™Ë]H[™[Ë[Ù[X[ÙÜÊJŠˆİ[™\™^™YÈMœ
+›İ[™Y[Ø\]Z]˜[[[ˆ\È™\Ù]
+HÈÛÙ[ˆÛİ™\››Y[›Ü›H[\˜Xİ[Û‹‚‹H
+Š’[\˜Xİ]™HÛÛ›ÛÈ
+]ÛœË[œ]ËÙ[Xİ›Ş\ÊJŠˆLÈXZ[Z[ˆHÜš\ÜÛXÚØX›H\™Ù]›Û™K‚‹H
+Š˜YÙ\Ëš[\ˆ[Ë[™YÈ[[Y[ÊŠˆ[H›İ[™YØ\İ[\È
+[
+HÈš\İX[H\İ[™İZ\ÚY]Y]Hœ›ÛHÛXÚØX›HØ\™È[™[œ]šY[Ë‚‚ˆÈÈÛÛ\Û™[Â‚ˆÈÈÈ]ÛœÂ‹H
+Š”š[X\HXİ[Ûˆ
+K™Ë‹”Ù]ZZH[X[\˜[ˆ‹”Ú[\[ˆ]HŠJŠˆÛÛYÌÍ‘X^Ú]K›İ[™YLY[™ÈLŒˆİ™\ˆÌMˆXİ]™NˆÌLMQMNX‚‹H
+Š”ÙXÛÛ™\HXİ[Ûˆ
+K™Ë‹•[™Z™\šØ\È‹‘ZÜÜÜˆ\Ü˜[ˆŠJŠˆ˜[œÜ\™[š[Ú]K\›Ü™\ˆ[ˆÌÍ‘X^ÌÍ‘Xˆİ™\ˆYÚ[˜XÚÙÜ›İ[™
+ÑŒ‘X
+K‚‹H
+Š•Ø\›HXØÙ[
+K™Ë‹”[˜ØZ\˜[ˆ[œÙ[Yˆ˜]ÚŠJŠˆÛÛYÑMÍÌ˜^Ú]Kˆİ™\ˆĞLÌX‚‹H
+Š‘\İXİ]™HXİ[ÛŠŠˆ]]Y›ÜÙH
+Ñ‘QL‘L˜
+K^ĞLPÌPØˆİ™\ˆÑQ^Ú]K‚‚ˆÈÈÈ]HØ\™È	ˆ™XÚ\Y[›Ùš[\Â‹H˜\ÙHÚ]HÛÛZ[™\ˆÚ]MœÛÜ›™\ˆ˜Y]\È[™\İ][™H
+ÑL‘NŒ
+K‚‹HXY\ˆÜ]ˆ™XÚ\Y[Y[]H
+˜[XK’RÈ\œØ[X\‹[X˜YØHKÔÙZÛÛZZ[™ÙİJHÛˆHYİ]\È˜YÙHÛˆHšYÚ‚‹H›Ûİ\ˆÙXİ[ÛˆÙ\\˜]YH\İXH]šY\ˆÛÛZ[š[™È˜[šÈ˜[YK›Ëˆ™ZÙ[š[™Ë[™›ÛZ[˜[[œÙ[Yˆ
+K™Ë‹œLŒÈ›˜
+H\Ü^YY[ˆ›ÛX[\ˆšYİ\™\Ë‚‚ˆÈÈÈİ]\ÈÚ\È	ˆ˜YÙ\Â‹H
+Š•HÈİ\H™ØZšJŠˆ˜XÚÙÜ›İ[™ĞĞÑ‘ŒX^ÌÍ‘X›Ü™\ˆÎNQ‘M‚‹H
+Š”ÙZÛÛZZ[™ÙİJŠˆ˜XÚÙÜ›İ[™ÑLŒ‘‘X^ÌÍPLX›Ü™\ˆĞQM‘‘‚‹H
+Š•\œØ[\šØ[ˆÈ\Ø\œÙY
+Šˆ˜XÚÙÜ›İ[™ÑÑÑMØ^ÌMNÑ›Ü™\ˆĞ‘Ñ‚‹H
+Š“Y[[™ÙİH™\šYšZØ\ÚJŠˆ˜XÚÙÜ›İ[™Ñ‘QŒĞÍØ^ĞLÌX›Ü™\ˆÑ‘MX‚‹HİXİ\™Nˆ[Ø\İ[H›Ü™\‹\˜Y]\Ë›Ûİ[HX™[\ÛXÜš^›Û[Y[™ÈL™\XØ[Y[™È‚‚ˆÈÈÈ[œ]È	ˆ™\šYšXØ][ÛˆÙ[XİÜœÂ‹Hİ[™\™ZYÚ›ÜˆİXÚXØÙ\ÜÚXš[]Kˆ›Ü™\ˆ\ĞĞ‘QLX˜XÚÙÜ›İ[™Ñ‘‘‘‘‘˜^ÌŒMÌX‚‹H›Øİ\Èİ]Nˆ›Ü™\ˆÛÛÜˆÌÍ‘X›Ş\ÚYİÈÜ™Ø˜JMKLNLLŒMJX‚‹HY[]H[œ]šY[È
+’RËÓ›Û[Üˆ™ZÙ[š[™ÊH™X]\™H[Û›ÜÜXÙY˜XÚÚ[™È[™]]ÛX]XÈÜ›İ\[™È›Ü›X][™Ë‚‚ˆÈÈÈÚXÚØ›Ş\È	ˆ\›İ˜[Ù[Xİ[Û‚‹HŒŒÜ]X\™HÚ]œ›Ü™\ˆ˜Y]\Ë‚‹HÚXÚÙYİ]Nˆ˜XÚÙÜ›İ[™ÌÍ‘X™X]\š[™ÈHÜš\ÜÚ]HÕ‘ÈÚXÚÈXÛÛ‹‚‹H[™]\›Z[˜]Hİ]H
+˜]ÚÙ[Xİ›Üˆ•Ô•È˜]Ú^[İ]
+NˆÛÛY˜\ˆ[™XØ]Ü‹‚‚ˆÈÈÈY][Û˜[ÛXZ[ˆÛÛ\Û™[Â‹H
+Š”İ]ÚYÙ]
+š[™ÚØ\Ø[ˆ[ÚØ\ÚJJŠˆÜ\Ú›Ø\™Ø\™È\Ü^Z[™Èİ[™XÚ\Y[Ë™X[\Ø\ÚH[™ÙØ\˜[ˆ
+œ
+K[™\œÙ[\ÙH[X[\˜[ˆ\ˆ•È
+•ÈHH•ÈH˜[™[[ŠK‚‹H
+Š]Y]İ[\
+ŠˆÛX[™\šYšXØ][ÛˆØ]\›X\šÈY]Y]H›ØÚÈ™X]\š[™È[Y\İ[\˜[XH™\šYšZØ]ÜˆÙ[\˜Z[‹[™\ÚÚYÛ˜]\™K

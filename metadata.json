@@ -1,0 +1,6 @@
+{
+  "name": "Sistem Insentif Keagamaan Bandulan",
+  "description": "Sistem tata kelola dan penyaluran insentif guru ngaji dan guru sekolah minggu Kelurahan Bandulan, Kota Malang.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
