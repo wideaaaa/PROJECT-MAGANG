@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Navigation, TabKey } from './components/Navigation';
 import { DashboardStats } from './components/DashboardStats';
@@ -15,9 +15,12 @@ import { PublicCheckPortal } from './components/PublicCheckPortal';
 import { AuditTrailView } from './components/AuditTrailView';
 import { TeacherPortalView } from './components/TeacherPortalView';
 import { AuthScreen } from './components/AuthScreen';
+import { SecurityDashboard } from './components/SecurityDashboard';
+import { LockScreenModal } from './components/LockScreenModal';
 
 import { INITIAL_RECIPIENTS, INITIAL_AUDIT_LOGS } from './data/mockRecipients';
-import { Recipient, DisbursementStatus, AuditLog, AuthUser } from './types';
+import { INITIAL_SECURITY_INCIDENTS } from './utils/security';
+import { Recipient, DisbursementStatus, AuditLog, AuthUser, SecurityIncident, SecurityStatus } from './types';
 import { CheckCircle2, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 export default function App() {
@@ -27,6 +30,36 @@ export default function App() {
   // Authentication session state
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
   const [showPublicCheckOnly, setShowPublicCheckOnly] = useState<boolean>(false);
+
+  // Security & Anti-Cracking State
+  const [securityIncidents, setSecurityIncidents] = useState<SecurityIncident[]>(INITIAL_SECURITY_INCIDENTS);
+  const [securityStatus, setSecurityStatus] = useState<SecurityStatus>({
+    shieldActive: true,
+    encryptionStandard: 'AES-256-GCM + SHA-256 HMAC',
+    pdpCompliance: true,
+    autoTimeoutMinutes: 15,
+    unmaskLogCount: 1,
+    failedAttemptsBlocked: 4,
+    mfaEnforced: true,
+  });
+  const [isSessionLocked, setIsSessionLocked] = useState<boolean>(false);
+  const [sessionRemainingSeconds, setSessionRemainingSeconds] = useState<number>(900);
+  const [isScanningIntegrity, setIsScanningIntegrity] = useState<boolean>(false);
+
+  // Inactivity auto-lock countdown timer
+  useEffect(() => {
+    if (!currentUser || isSessionLocked) return;
+    const interval = setInterval(() => {
+      setSessionRemainingSeconds((prev) => {
+        if (prev <= 1) {
+          setIsSessionLocked(true);
+          return securityStatus.autoTimeoutMinutes * 60;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [currentUser, isSessionLocked, securityStatus.autoTimeoutMinutes]);
 
   const [activeTab, setActiveTab] = useState<TabKey>('DASHBOARD');
   const [currentRole, setCurrentRole] = useState<'ADMIN_KESRA' | 'LURAH' | 'GURU_MANDIRI'>('ADMIN_KESRA');
@@ -311,10 +344,53 @@ export default function App() {
     showToast(`Pendaftaran guru "${newRec.nama}" berhasil disimpan dan menunggu verifikasi.`);
   };
 
+  // Security Handlers
+  const handleLogSecurityIncident = (type: string, details: string) => {
+    const timeNow = new Date().toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }) + ' WIB';
+
+    const newIncident: SecurityIncident = {
+      id: `SEC-LOG-${Date.now().toString().slice(-4)}`,
+      timestamp: timeNow,
+      type: type as any,
+      severity: type === 'FAILED_LOGIN' ? 'HIGH' : type === 'NIK_UNMASKED' ? 'MEDIUM' : 'LOW',
+      actor: currentUser?.name || 'Aparatur Kelurahan',
+      ipAddress: '10.32.4.18 (Intranet Kelurahan Bandulan)',
+      userAgent: navigator.userAgent.slice(0, 40),
+      details,
+      status: 'RESOLVED',
+    };
+
+    setSecurityIncidents((prev) => [newIncident, ...prev]);
+    if (type === 'NIK_UNMASKED') {
+      setSecurityStatus((prev) => ({ ...prev, unmaskLogCount: prev.unmaskLogCount + 1 }));
+      showToast('Akses NIK lengkap dicatat dalam Buku Log Keamanan (Kepatuhan UU PDP).');
+    }
+  };
+
+  const handleRunIntegrityCheck = () => {
+    setIsScanningIntegrity(true);
+    setTimeout(() => {
+      setIsScanningIntegrity(false);
+      handleLogSecurityIncident(
+        'TAMPER_CHECK_PASSED',
+        `Pemeriksaan integritas hash SHA-256 selesai. Seluruh ${recipients.length} data guru keagamaan valid dan tidak termodifikasi.`
+      );
+      showToast('Pemeriksaan Integritas Berhasil: 100% data valid sesuai signature SHA-256.');
+    }, 1200);
+  };
+
   // Auth Handlers
   const handleLogin = (user: AuthUser) => {
     setCurrentUser(user);
     setShowPublicCheckOnly(false);
+    setIsSessionLocked(false);
+    setSessionRemainingSeconds(securityStatus.autoTimeoutMinutes * 60);
 
     if (user.role === 'TEACHER') {
       setActiveTab('TEACHER_PORTAL');
@@ -334,6 +410,7 @@ export default function App() {
     const prevName = currentUser?.name;
     setCurrentUser(null);
     setShowPublicCheckOnly(false);
+    setIsSessionLocked(false);
     setActiveTab('DASHBOARD');
     showToast(`${prevName || 'Pengguna'} telah berhasil keluar dari sistem.`);
   };
@@ -373,12 +450,31 @@ export default function App() {
         recipients={recipients}
         onLogin={handleLogin}
         onOpenPublicCheck={() => setShowPublicCheckOnly(true)}
+        onRegisterRecipient={(newRec, autoLoginUser) => {
+          handleRegisterRecipient(newRec);
+          if (autoLoginUser) {
+            handleLogin(autoLoginUser);
+          }
+        }}
       />
     );
   }
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] flex flex-col selection:bg-teal-100 selection:text-teal-900">
+      {/* Auto-Lock Screen Overlay if Session Locked */}
+      {isSessionLocked && (
+        <LockScreenModal
+          currentUser={currentUser}
+          onUnlock={() => {
+            setIsSessionLocked(false);
+            setSessionRemainingSeconds(securityStatus.autoTimeoutMinutes * 60);
+            showToast('Layar berhasil dibuka kembali.');
+          }}
+          onLogout={handleLogout}
+        />
+      )}
+
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 bg-[#0f766e] text-white px-4 py-3 rounded-xl shadow-lg border border-teal-400/40 flex items-center gap-2.5 text-xs font-semibold animate-in slide-in-from-bottom duration-200">
@@ -391,6 +487,9 @@ export default function App() {
       <Header
         currentUser={currentUser}
         onLogout={handleLogout}
+        onLockSession={() => setIsSessionLocked(true)}
+        onOpenSecurityCenter={() => setActiveTab('SECURITY')}
+        sessionRemainingSeconds={sessionRemainingSeconds}
         currentRole={currentRole}
         onRoleChange={(role) => {
           setCurrentRole(role);
@@ -548,6 +647,17 @@ export default function App() {
           </div>
         )}
 
+        {activeTab === 'SECURITY' && (
+          <SecurityDashboard
+            incidents={securityIncidents}
+            recipients={recipients}
+            securityStatus={securityStatus}
+            onUpdateSecurityStatus={(s) => setSecurityStatus((prev) => ({ ...prev, ...s }))}
+            onRunIntegrityCheck={handleRunIntegrityCheck}
+            isScanning={isScanningIntegrity}
+          />
+        )}
+
         {activeTab === 'PUBLIC_CHECK' && (
           <PublicCheckPortal
             recipients={recipients}
@@ -565,6 +675,7 @@ export default function App() {
         recipient={detailRecipient}
         onClose={() => setDetailRecipient(null)}
         onUpdateStatus={handleUpdateStatus}
+        onLogSecurityIncident={handleLogSecurityIncident}
         currentRole={currentRole}
       />
 

@@ -103,3 +103,35 @@ export interface DisbursementBatch {
   kasiKesraSigned: boolean;
   signedDate?: string;
 }
+
+export type SecurityEventType = 
+  | 'FAILED_LOGIN'
+  | 'RATE_LIMIT_BLOCKED'
+  | 'NIK_UNMASKED'
+  | 'BATCH_MFA_CHALLENGE'
+  | 'SESSION_TIMEOUT'
+  | 'TAMPER_CHECK_PASSED'
+  | 'CONFIG_CHANGE';
+
+export interface SecurityIncident {
+  id: string;
+  timestamp: string;
+  type: SecurityEventType;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  actor: string;
+  ipAddress: string;
+  userAgent: string;
+  details: string;
+  status: 'RESOLVED' | 'INVESTIGATING' | 'AUTOMATICALLY_BLOCKED';
+}
+
+export interface SecurityStatus {
+  shieldActive: boolean;
+  encryptionStandard: string; // e.g. "AES-256-GCM + SHA-256 Hashing"
+  pdpCompliance: boolean;     // UU Perlindungan Data Pribadi No. 27/2022
+  autoTimeoutMinutes: number;
+  unmaskLogCount: number;
+  failedAttemptsBlocked: number;
+  mfaEnforced: boolean;
+}
+

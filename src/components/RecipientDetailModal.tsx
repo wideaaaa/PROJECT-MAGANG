@@ -16,10 +16,13 @@ import {
   Calendar, 
   Printer, 
   Hash, 
-  Send,
-  AlertTriangle,
-  QrCode,
-  UserCheck
+  Send, 
+  AlertTriangle, 
+  QrCode, 
+  UserCheck,
+  Eye,
+  EyeOff,
+  Lock
 } from 'lucide-react';
 import { Recipient, DisbursementStatus, VerificationDocument } from '../types';
 
@@ -27,6 +30,7 @@ interface RecipientDetailModalProps {
   recipient: Recipient | null;
   onClose: () => void;
   onUpdateStatus: (recipientId: string, newStatus: DisbursementStatus, notes?: string) => void;
+  onLogSecurityIncident?: (type: string, details: string) => void;
   currentRole: 'ADMIN_KESRA' | 'LURAH' | 'GURU_MANDIRI';
 }
 
@@ -34,6 +38,7 @@ export const RecipientDetailModal: React.FC<RecipientDetailModalProps> = ({
   recipient,
   onClose,
   onUpdateStatus,
+  onLogSecurityIncident,
   currentRole,
 }) => {
   if (!recipient) return null;
@@ -42,6 +47,18 @@ export const RecipientDetailModal: React.FC<RecipientDetailModalProps> = ({
   const [showRevisionForm, setShowRevisionForm] = useState(false);
   const [previewDocument, setPreviewDocument] = useState<VerificationDocument | null>(null);
   const [showPrintSlip, setShowPrintSlip] = useState(false);
+  const [isNikUnmasked, setIsNikUnmasked] = useState(false);
+
+  const toggleNikMasking = () => {
+    if (!isNikUnmasked) {
+      setIsNikUnmasked(true);
+      if (onLogSecurityIncident) {
+        onLogSecurityIncident('NIK_UNMASKED', `Akses unmasking NIK lengkap atas nama ${recipient.nama} (${recipient.nik}) dibuka oleh admin.`);
+      }
+    } else {
+      setIsNikUnmasked(false);
+    }
+  };
 
   const handleApprove = () => {
     onUpdateStatus(recipient.id, 'SIAP_SALUR', 'Berkas disetujui, siap masuk batch penyaluran.');
@@ -108,10 +125,24 @@ export const RecipientDetailModal: React.FC<RecipientDetailModalProps> = ({
                   <span className="text-slate-400">•</span>
                   <span className="text-xs font-medium text-slate-600">{recipient.rw} / {recipient.rt}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-mono text-slate-600">
-                  <span>NIK Resmi: <strong>{recipient.nik}</strong></span>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-600">
+                  <span>
+                    NIK: <strong className="tracking-wider">{isNikUnmasked ? recipient.nik : recipient.maskedNik}</strong>
+                  </span>
+                  
+                  {/* Unmasking Security Toggle Button */}
+                  <button
+                    type="button"
+                    onClick={toggleNikMasking}
+                    className="inline-flex items-center gap-1 text-[10px] font-sans font-semibold px-2 py-0.5 rounded-md bg-slate-200/80 hover:bg-teal-100 text-slate-700 hover:text-[#0f766e] transition-colors cursor-pointer"
+                    title={isNikUnmasked ? "Kunci kembali penyamaran NIK" : "Buka NIK lengkap (Tindakan dicatat dalam log audit)"}
+                  >
+                    {isNikUnmasked ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                    <span>{isNikUnmasked ? "Kunci NIK" : "Lihat NIK"}</span>
+                  </button>
+
                   {recipient.dukcapilVerified && (
-                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded-full">
+                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded-full font-sans">
                       <ShieldCheck className="w-3 h-3" /> Valid Dukcapil
                     </span>
                   )}

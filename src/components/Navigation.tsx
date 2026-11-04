@@ -1,4 +1,3 @@
-import React from 'react';
 import { 
   LayoutDashboard, 
   Users, 
@@ -6,12 +5,13 @@ import {
   UserPlus, 
   SearchCode, 
   History,
-  AlertCircle
+  AlertCircle,
+  ShieldCheck
 } from 'lucide-react';
 
 import { AuthUser } from '../types';
 
-export type TabKey = 'DASHBOARD' | 'RECIPIENTS' | 'BATCH' | 'TEACHER_PORTAL' | 'REGISTER' | 'PUBLIC_CHECK' | 'AUDIT';
+export type TabKey = 'DASHBOARD' | 'RECIPIENTS' | 'BATCH' | 'TEACHER_PORTAL' | 'REGISTER' | 'PUBLIC_CHECK' | 'SECURITY' | 'AUDIT';
 
 interface NavigationProps {
   currentUser: AuthUser | null;
@@ -65,6 +65,14 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Pendaftaran Guru Baru',
       icon: UserPlus,
       badge: null,
+      adminOnly: true,
+    },
+    {
+      key: 'SECURITY' as TabKey,
+      label: 'Pusat Keamanan & UU PDP',
+      icon: ShieldCheck,
+      badge: '98 Skor',
+      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
       adminOnly: true,
     },
     {

@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { Recipient } from '../types';
 
+import { SecurityModalMfa } from './SecurityModalMfa';
+
 interface BatchDisbursementModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -45,16 +47,22 @@ export const BatchDisbursementModal: React.FC<BatchDisbursementModalProps> = ({
   const [kasiSignChecked, setKasiSignChecked] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [showMfaModal, setShowMfaModal] = useState(false);
 
   const totalNominal = targets.length * 500000;
 
-  const handleProcess = () => {
+  const triggerMfaChallenge = () => {
+    setShowMfaModal(true);
+  };
+
+  const handleMfaSuccess = (reason: string) => {
+    setShowMfaModal(false);
     setIsProcessing(true);
     setTimeout(() => {
       onExecuteBatchDisbursement(targets.map((t) => t.id), batchNumber);
       setIsProcessing(false);
       setIsCompleted(true);
-    }, 800);
+    }, 700);
   };
 
   const handlePrint = () => {
@@ -270,7 +278,7 @@ export const BatchDisbursementModal: React.FC<BatchDisbursementModalProps> = ({
                   </button>
                   <button
                     disabled={targets.length === 0 || isProcessing}
-                    onClick={handleProcess}
+                    onClick={triggerMfaChallenge}
                     className="px-5 py-2.5 text-xs font-bold text-white bg-[#d97706] hover:bg-[#b45309] disabled:bg-slate-300 rounded-[10px] shadow-sm transition-all flex items-center gap-2 cursor-pointer"
                   >
                     {isProcessing ? (
@@ -281,7 +289,7 @@ export const BatchDisbursementModal: React.FC<BatchDisbursementModalProps> = ({
                     ) : (
                       <>
                         <Send className="w-3.5 h-3.5" />
-                        <span>Eksekusi Pencairan Dana (Rp {totalNominal.toLocaleString('id-ID')})</span>
+                        <span>Verifikasi 2FA & Eksekusi Pencairan (Rp {totalNominal.toLocaleString('id-ID')})</span>
                       </>
                     )}
                   </button>
@@ -291,6 +299,17 @@ export const BatchDisbursementModal: React.FC<BatchDisbursementModalProps> = ({
           )}
         </div>
       </div>
+
+      {/* MFA Security Verification Challenge */}
+      <SecurityModalMfa
+        isOpen={showMfaModal}
+        onClose={() => setShowMfaModal(false)}
+        onSuccess={handleMfaSuccess}
+        title="Otorisasi Pencairan Dana Payroll"
+        description={`Anda akan mencairkan dana insentif sebesar Rp ${totalNominal.toLocaleString('id-ID')} kepada ${targets.length} guru keagamaan via transfer payroll Bank Jatim.`}
+        actionLabel="Otorisasi Transfer Bank"
+        targetNominal={totalNominal}
+      />
     </div>
   );
 };

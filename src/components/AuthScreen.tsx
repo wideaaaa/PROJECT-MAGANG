@@ -13,27 +13,34 @@ import {
   AlertCircle,
   Sparkles,
   Users,
-  Award
+  Award,
+  UserPlus
 } from 'lucide-react';
 import { AuthUser, Recipient } from '../types';
+import { checkRateLimit, recordFailedAttempt, resetRateLimit } from '../utils/security';
+import { SelfRegistrationModal } from './SelfRegistrationModal';
 
 interface AuthScreenProps {
   recipients: Recipient[];
   onLogin: (user: AuthUser) => void;
   onOpenPublicCheck: () => void;
+  onRegisterRecipient?: (newRecipient: Recipient, autoLoginUser?: AuthUser) => void;
 }
 
 export const AuthScreen: React.FC<AuthScreenProps> = ({
   recipients,
   onLogin,
   onOpenPublicCheck,
+  onRegisterRecipient,
 }) => {
   const [activePortal, setActivePortal] = useState<'TEACHER' | 'ADMIN'>('TEACHER');
+  const [showSelfRegisterModal, setShowSelfRegisterModal] = useState(false);
 
   // Teacher login state
   const [teacherNik, setTeacherNik] = useState('');
   const [teacherPin, setTeacherPin] = useState('123456');
   const [teacherError, setTeacherError] = useState('');
+  const [lockoutRemaining, setLockoutRemaining] = useState<number>(0);
 
   // Admin login state
   const [adminRole, setAdminRole] = useState<'ADMIN_KESRA' | 'LURAH'>('ADMIN_KESRA');
@@ -46,13 +53,30 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
     e.preventDefault();
     setTeacherError('');
 
+    // Check rate limit
+    const limitStatus = checkRateLimit('teacher_login', 5, 60);
+    if (!limitStatus.allowed) {
+      setLockoutRemaining(limitStatus.lockoutRemainingSeconds);
+      setTeacherError(`Terdeteksi proteksi anti-brute force: Batas percobaan terlampaui. Mohon tunggu ${limitStatus.lockoutRemainingSeconds} detik.`);
+      return;
+    }
+
     const cleanInput = teacherNik.trim().replace(/\D/g, '');
     const matched = recipients.find((r) => r.nik.includes(cleanInput) || r.nama.toLowerCase().includes(teacherNik.toLowerCase()));
 
     if (!matched) {
-      setTeacherError('NIK tidak terdaftar dalam database guru keagamaan Kelurahan Bandulan. Silakan cek kembali atau pilih dari akun demo di bawah.');
+      const failStatus = recordFailedAttempt('teacher_login', 5, 60);
+      if (failStatus.locked) {
+        setLockoutRemaining(failStatus.lockoutRemainingSeconds);
+        setTeacherError(`⚠️ Terlalu banyak percobaan gagal (5x). Sistem otomatis mengunci akses login selama 60 detik demi keamanan data.`);
+      } else {
+        const remaining = 5 - (failStatus as any).attempts || 3;
+        setTeacherError(`NIK tidak terdaftar dalam database guru keagamaan Bandulan. Sisa percobaan aman sebelum proteksi lockout aktif.`);
+      }
       return;
     }
+
+    resetRateLimit('teacher_login');
 
     const authUser: AuthUser = {
       id: `USR-${matched.id}`,
@@ -249,6 +273,25 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 </button>
               </form>
 
+              {/* Fitur Daftar Mandiri Pengajar Keagamaan Baru */}
+              <div className="bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200/90 rounded-2xl p-4 text-center space-y-2 shadow-2xs">
+                <div className="flex items-center justify-center gap-2 text-xs font-bold text-teal-950">
+                  <UserPlus className="w-4 h-4 text-[#0f766e]" />
+                  <span>Belum Terdaftar Sebagai Penerima Insentif?</span>
+                </div>
+                <p className="text-[11px] text-teal-800/90 leading-relaxed max-w-sm mx-auto">
+                  Pengajar TPQ, Madrasah Diniyah, Sekolah Minggu, Pasraman & Vihara di Kelurahan Bandulan dapat mendaftarkan diri secara mandiri.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowSelfRegisterModal(true)}
+                  className="w-full py-2.5 bg-white hover:bg-teal-50 text-[#0f766e] font-bold text-xs rounded-[10px] border border-teal-300 shadow-2xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5" />
+                  <span>Daftar Mandiri Guru Keagamaan Baru →</span>
+                </button>
+              </div>
+
               {/* Demo Fast Login Chips for Testing */}
               <div className="pt-2 border-t border-slate-100 space-y-2.5">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
@@ -420,6 +463,23 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
       <div className="max-w-5xl w-full mx-auto text-center text-xs text-slate-400 pt-6">
         <p>Sistem Insentif Guru Keagamaan Kelurahan Bandulan, Kecamatan Sukun, Kota Malang, Jawa Timur</p>
       </div>
+
+      {/* Modal Pendaftaran Mandiri Guru Keagamaan Baru */}
+      <SelfRegistrationModal
+        isOpen={showSelfRegisterModal}
+        onClose={() => setShowSelfRegisterModal(false)}
+        onSuccessRegister={(newRec, autoUser) => {
+          if (onRegisterRecipient) {
+            onRegisterRecipient(newRec, autoUser);
+          }
+          if (autoUser) {
+            onLogin(autoUser);
+          } else {
+            setTeacherNik(newRec.nik);
+            setShowSelfRegisterModal(false);
+          }
+        }}
+      />
     </div>
   );
 };

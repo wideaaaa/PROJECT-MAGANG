@@ -1,3 +1,4 @@
+import React from 'react';
 import { 
   Building2, 
   ShieldCheck, 
@@ -9,13 +10,17 @@ import {
   ChevronDown,
   Layers,
   LogOut,
-  User
+  User,
+  Lock
 } from 'lucide-react';
 import { AuthUser } from '../types';
 
 interface HeaderProps {
   currentUser: AuthUser | null;
   onLogout: () => void;
+  onLockSession?: () => void;
+  onOpenSecurityCenter?: () => void;
+  sessionRemainingSeconds?: number;
   currentRole: 'ADMIN_KESRA' | 'LURAH' | 'GURU_MANDIRI';
   onRoleChange: (role: 'ADMIN_KESRA' | 'LURAH' | 'GURU_MANDIRI') => void;
   selectedPeriod: string;
@@ -30,6 +35,9 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   currentUser,
   onLogout,
+  onLockSession,
+  onOpenSecurityCenter,
+  sessionRemainingSeconds = 900,
   currentRole,
   onRoleChange,
   selectedPeriod,
@@ -40,6 +48,11 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenBatchDisbursement,
   pendingCount,
 }) => {
+  const formatTimer = (totalSeconds: number) => {
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       {/* Top Municipal Identity Bar */}
@@ -148,6 +161,27 @@ export const Header: React.FC<HeaderProps> = ({
                     </p>
                   </div>
                 </div>
+
+                {/* Session Security Indicator */}
+                <div 
+                  onClick={onOpenSecurityCenter}
+                  className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-100 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 rounded-[10px] text-[11px] font-mono text-slate-700 transition-colors cursor-pointer"
+                  title="Klik untuk membuka Pusat Keamanan & Kepatuhan UU PDP"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="font-semibold text-slate-800">{formatTimer(sessionRemainingSeconds)}</span>
+                </div>
+
+                {/* Quick Lock Button */}
+                {onLockSession && (
+                  <button
+                    onClick={onLockSession}
+                    className="p-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-[10px] transition-colors cursor-pointer"
+                    title="Kunci Layar (Quick Screen Lock)"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                  </button>
+                )}
 
                 {/* Logout Button */}
                 <button
