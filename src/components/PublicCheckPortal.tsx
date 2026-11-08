@@ -54,10 +54,10 @@ export const PublicCheckPortal: React.FC<PublicCheckPortalProps> = ({
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-            Portal Mandiri Pengecekan Insentif Guru Keagamaan
+            Portal Mandiri Pengecekan Honorarium (5 Peran)
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-            Bapak/Ibu Pengajar TPQ, Madrasah Diniyah, dan Sekolah Minggu di Kelurahan Bandulan dapat memantau proses verifikasi dan pencairan insentif secara transparan.
+            Guru TPQ, Guru Sekolah Minggu, Penjaga Tempat Ibadah (Marbot), Perawat Jenazah, & Penjaga Makam di Kelurahan Bandulan dapat memantau status Her-Registrasi 2027 dan pencairan honor secara transparan.
           </p>
         </div>
 
@@ -157,7 +157,7 @@ export const PublicCheckPortal: React.FC<PublicCheckPortalProps> = ({
                 {/* Details Breakdown */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-4 rounded-xl border border-slate-200">
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Lembaga Mengajar</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold">Tempat Tugas / Wilayah</span>
                     <span className="font-semibold text-slate-800">{matchedRecipient.namaLembaga}</span>
                   </div>
                   <div>

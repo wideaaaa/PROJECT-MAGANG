@@ -17,6 +17,7 @@ import { TeacherPortalView } from './components/TeacherPortalView';
 import { AuthScreen } from './components/AuthScreen';
 import { SecurityDashboard } from './components/SecurityDashboard';
 import { LockScreenModal } from './components/LockScreenModal';
+import { MonthlyRealizationReport } from './components/MonthlyRealizationReport';
 
 import { INITIAL_RECIPIENTS, INITIAL_AUDIT_LOGS } from './data/mockRecipients';
 import { INITIAL_SECURITY_INCIDENTS } from './utils/security';
@@ -329,19 +330,19 @@ export default function App() {
     const newLog: AuditLog = {
       id: `LOG-${Date.now()}`,
       timestamp: timeNow,
-      actorName: 'Pendaftaran Mandiri / Staf Pelayanan',
+      actorName: 'Pendaftaran Mandiri / Staf Kesra',
       actorRole: 'Sistem SIKB Bandulan',
-      action: 'Pendaftaran Guru Keagamaan Baru',
+      action: `Her-Registrasi: ${newRec.kategoriLabel}`,
       recipientId: newRec.id,
       recipientName: newRec.nama,
       newStatus: 'MENUNGGU_VERIFIKASI',
       hash: `SHA256:reg${newRec.nik.slice(8)}`,
-      notes: `Pengajar baru terdaftar dari ${newRec.namaLembaga} (${newRec.rw}). Menunggu verifikasi berkas oleh Kasi Kesra.`,
+      notes: `Penerima honor baru terdaftar sebagai ${newRec.kategoriLabel} dari ${newRec.namaLembaga} (${newRec.rw}). Menunggu verifikasi berkas oleh Kasi Kesra.`,
     };
 
     setAuditLogs((prev) => [newLog, ...prev]);
     setActiveTab('RECIPIENTS');
-    showToast(`Pendaftaran guru "${newRec.nama}" berhasil disimpan dan menunggu verifikasi.`);
+    showToast(`Her-Registrasi 2027 "${newRec.nama}" (${newRec.kategoriLabel}) berhasil disimpan dan menunggu verifikasi.`);
   };
 
   // Security Handlers
@@ -477,60 +478,62 @@ export default function App() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-[#0f766e] text-white px-4 py-3 rounded-xl shadow-lg border border-teal-400/40 flex items-center gap-2.5 text-xs font-semibold animate-in slide-in-from-bottom duration-200">
+        <div className="no-print fixed bottom-5 right-5 z-50 bg-[#0f766e] text-white px-4 py-3 rounded-xl shadow-lg border border-teal-400/40 flex items-center gap-2.5 text-xs font-semibold animate-in slide-in-from-bottom duration-200">
           <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* Main App Header */}
-      <Header
-        currentUser={currentUser}
-        onLogout={handleLogout}
-        onLockSession={() => setIsSessionLocked(true)}
-        onOpenSecurityCenter={() => setActiveTab('SECURITY')}
-        sessionRemainingSeconds={sessionRemainingSeconds}
-        currentRole={currentRole}
-        onRoleChange={(role) => {
-          setCurrentRole(role);
-          if (role === 'GURU_MANDIRI') {
-            setActiveTab('TEACHER_PORTAL');
-          } else if (activeTab === 'TEACHER_PORTAL') {
-            setActiveTab('DASHBOARD');
-          }
-        }}
-        selectedPeriod={selectedPeriod}
-        onPeriodChange={setSelectedPeriod}
-        searchQuery={searchQuery}
-        onSearchChange={(q) => {
-          setSearchQuery(q);
-          if (q.trim() && activeTab !== 'RECIPIENTS') {
-            setActiveTab('RECIPIENTS');
-          }
-        }}
-        onOpenNewRegistration={() => setIsRegisterModalOpen(true)}
-        onOpenBatchDisbursement={() => setIsBatchModalOpen(true)}
-        pendingCount={pendingCount}
-      />
+      <div className="no-print">
+        <Header
+          currentUser={currentUser}
+          onLogout={handleLogout}
+          onLockSession={() => setIsSessionLocked(true)}
+          onOpenSecurityCenter={() => setActiveTab('SECURITY')}
+          sessionRemainingSeconds={sessionRemainingSeconds}
+          currentRole={currentRole}
+          onRoleChange={(role) => {
+            setCurrentRole(role);
+            if (role === 'GURU_MANDIRI') {
+              setActiveTab('TEACHER_PORTAL');
+            } else if (activeTab === 'TEACHER_PORTAL') {
+              setActiveTab('DASHBOARD');
+            }
+          }}
+          selectedPeriod={selectedPeriod}
+          onPeriodChange={setSelectedPeriod}
+          searchQuery={searchQuery}
+          onSearchChange={(q) => {
+            setSearchQuery(q);
+            if (q.trim() && activeTab !== 'RECIPIENTS') {
+              setActiveTab('RECIPIENTS');
+            }
+          }}
+          onOpenNewRegistration={() => setIsRegisterModalOpen(true)}
+          onOpenBatchDisbursement={() => setIsBatchModalOpen(true)}
+          pendingCount={pendingCount}
+        />
 
-      {/* Navigation Bar */}
-      <Navigation
-        currentUser={currentUser}
-        activeTab={activeTab}
-        onTabChange={(tab) => {
-          setActiveTab(tab);
-          if (tab === 'TEACHER_PORTAL') {
-            setCurrentRole('GURU_MANDIRI');
-          } else if (currentRole === 'GURU_MANDIRI' && tab !== 'PUBLIC_CHECK') {
-            setCurrentRole('ADMIN_KESRA');
-          }
-        }}
-        pendingCount={pendingCount}
-        readyCount={readyCount}
-      />
+        {/* Navigation Bar */}
+        <Navigation
+          currentUser={currentUser}
+          activeTab={activeTab}
+          onTabChange={(tab) => {
+            setActiveTab(tab);
+            if (tab === 'TEACHER_PORTAL') {
+              setCurrentRole('GURU_MANDIRI');
+            } else if (currentRole === 'GURU_MANDIRI' && tab !== 'PUBLIC_CHECK') {
+              setCurrentRole('ADMIN_KESRA');
+            }
+          }}
+          pendingCount={pendingCount}
+          readyCount={readyCount}
+        />
+      </div>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 print:p-0 print:m-0 print:max-w-none">
         {activeTab === 'DASHBOARD' && (
           <DashboardStats
             recipients={recipients}
@@ -548,6 +551,7 @@ export default function App() {
             }}
             onOpenBatchDisbursement={() => setIsBatchModalOpen(true)}
             onOpenNewRegistration={() => setIsRegisterModalOpen(true)}
+            onOpenMonthlyReport={() => setActiveTab('MONTHLY_REPORT')}
           />
         )}
 
@@ -566,6 +570,15 @@ export default function App() {
             onCategoryFilterChange={setCategoryFilter}
             rwFilter={rwFilter}
             onRwFilterChange={setRwFilter}
+          />
+        )}
+
+        {activeTab === 'MONTHLY_REPORT' && (
+          <MonthlyRealizationReport
+            recipients={recipients}
+            selectedPeriod={selectedPeriod}
+            onPeriodChange={setSelectedPeriod}
+            currentUser={currentUser}
           />
         )}
 
@@ -632,16 +645,16 @@ export default function App() {
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">
-                Pendataan & Pengusulan Guru Keagamaan Baru
+                Formulir Her-Registrasi 2027 (5 Peran Kelurahan)
               </h3>
               <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
-                Pengurus TPQ, Madrasah Diniyah, Majelis Gereja, dan Pasraman di Kelurahan Bandulan dapat mendaftarkan guru pembina yang aktif mengajar untuk diajukan mendapatkan insentif bulanan.
+                Pengusulan dan pendaftaran ulang penerima honorarium Kelurahan Bandulan: <strong>Guru TPQ, Guru Sekolah Minggu, Penjaga Tempat Ibadah (Marbot), Perawat Jenazah, dan Penjaga Makam</strong> Tahun Anggaran 2027.
               </p>
               <button
                 onClick={() => setIsRegisterModalOpen(true)}
-                className="px-6 py-3 bg-[#0f766e] hover:bg-[#0d9488] active:bg-[#115e59] text-white text-xs font-bold rounded-[10px] shadow-sm transition-colors inline-flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3 bg-[#0f766e] hover:bg-[#0d9488] active:bg-[#115e59] text-white text-xs font-bold rounded-xl shadow-sm transition-colors inline-flex items-center gap-2 cursor-pointer"
               >
-                <span>Buka Formulir Pendaftaran Guru</span>
+                <span>Buka Formulir Her-Registrasi 2027</span>
               </button>
             </div>
           </div>
@@ -697,7 +710,7 @@ export default function App() {
       />
 
       {/* Municipal Civic Footer */}
-      <footer className="bg-white border-t border-slate-200 py-6 text-xs text-slate-500 mt-auto">
+      <footer className="no-print bg-white border-t border-slate-200 py-6 text-xs text-slate-500 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">SIKB Bandulan</span>

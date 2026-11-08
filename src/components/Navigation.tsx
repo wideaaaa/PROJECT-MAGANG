@@ -6,12 +6,13 @@ import {
   SearchCode, 
   History,
   AlertCircle,
-  ShieldCheck
+  ShieldCheck,
+  FileSpreadsheet
 } from 'lucide-react';
 
 import { AuthUser } from '../types';
 
-export type TabKey = 'DASHBOARD' | 'RECIPIENTS' | 'BATCH' | 'TEACHER_PORTAL' | 'REGISTER' | 'PUBLIC_CHECK' | 'SECURITY' | 'AUDIT';
+export type TabKey = 'DASHBOARD' | 'RECIPIENTS' | 'MONTHLY_REPORT' | 'BATCH' | 'TEACHER_PORTAL' | 'REGISTER' | 'PUBLIC_CHECK' | 'SECURITY' | 'AUDIT';
 
 interface NavigationProps {
   currentUser: AuthUser | null;
@@ -45,8 +46,16 @@ export const Navigation: React.FC<NavigationProps> = ({
       adminOnly: true,
     },
     {
+      key: 'MONTHLY_REPORT' as TabKey,
+      label: 'Laporan Realisasi Bulanan',
+      icon: FileSpreadsheet,
+      badge: 'Cetak PDF',
+      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+      adminOnly: true,
+    },
+    {
       key: 'TEACHER_PORTAL' as TabKey,
-      label: currentUser?.role === 'TEACHER' ? 'Dashboard Pengajar & Insentif' : 'Pratinjau Portal Guru',
+      label: currentUser?.role === 'TEACHER' ? 'Dashboard Akun Saya' : 'Pratinjau Portal Penerima',
       icon: Users,
       badge: currentUser?.role === 'TEACHER' ? 'Akun Saya' : 'Pratinjau',
       badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
@@ -62,7 +71,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     {
       key: 'REGISTER' as TabKey,
-      label: 'Pendaftaran Guru Baru',
+      label: 'Her-Registrasi 2027 (5 Peran)',
       icon: UserPlus,
       badge: null,
       adminOnly: true,

@@ -124,13 +124,13 @@ export const RecipientList: React.FC<RecipientListProps> = ({
     }
   };
 
-  // Helper for Category Badge strictly following design spec
+  // Helper for Category Badge strictly following the 5 official roles
   const renderCategoryBadge = (category: ReligiousCategory) => {
     switch (category) {
-      case 'GURU_NGAJI':
+      case 'GURU_TPQ':
         return (
           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[#ccfbf1] text-[#0f766e] border border-[#99f6e4]">
-            TPQ / Guru Ngaji
+            Guru TPQ
           </span>
         );
       case 'GURU_SEKOLAH_MINGGU':
@@ -139,16 +139,28 @@ export const RecipientList: React.FC<RecipientListProps> = ({
             Sekolah Minggu
           </span>
         );
-      case 'GURU_PASRAMAN':
+      case 'PENJAGA_TEMPAT_IBADAH':
         return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[#fef3c7] text-[#b45309] border border-[#fde68a]">
-            Pasraman Hindu
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[#dcfce7] text-[#15803d] border border-[#bbf7d0]">
+            Marbot / Tempat Ibadah
           </span>
         );
-      case 'GURU_VIHARA':
+      case 'PERAWAT_JENAZAH':
+        return (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[#ede9fe] text-[#6d28d9] border border-[#ddd6fe]">
+            Perawat Jenazah
+          </span>
+        );
+      case 'PENJAGA_MAKAM':
         return (
           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[#fef3c7] text-[#b45309] border border-[#fde68a]">
-            Vihara Buddhis
+            Penjaga Makam
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-slate-100 text-slate-700">
+            {category}
           </span>
         );
     }
@@ -175,18 +187,19 @@ export const RecipientList: React.FC<RecipientListProps> = ({
               <option value="PERLU_REVISI">Perlu Revisi Dokumen</option>
             </select>
 
-            {/* Category Filter */}
+            {/* Category Filter for 5 Roles */}
             <select
               value={categoryFilter}
               onChange={(e) => onCategoryFilterChange(e.target.value)}
-              aria-label="Filter Berdasarkan Kategori Keagamaan"
+              aria-label="Filter Berdasarkan Kategori Peran"
               className="h-10 px-3 text-xs font-semibold bg-slate-50 border border-slate-300 rounded-[10px] text-slate-800 focus:outline-none focus:ring-3 focus:ring-teal-700/15 focus:border-[#0f766e]"
             >
-              <option value="ALL">Semua Kategori Keagamaan</option>
-              <option value="GURU_NGAJI">Guru Ngaji (TPQ/Madrasah)</option>
-              <option value="GURU_SEKOLAH_MINGGU">Guru Sekolah Minggu</option>
-              <option value="GURU_PASRAMAN">Pasraman Hindu</option>
-              <option value="GURU_VIHARA">Vihara Buddhis</option>
+              <option value="ALL">Semua Peran (5 Peran Kelurahan)</option>
+              <option value="GURU_TPQ">1. Guru TPQ (Tempat Pendidikan Quran)</option>
+              <option value="GURU_SEKOLAH_MINGGU">2. Guru Sekolah Minggu</option>
+              <option value="PENJAGA_TEMPAT_IBADAH">3. Penjaga Tempat Ibadah (Marbot)</option>
+              <option value="PERAWAT_JENAZAH">4. Perawat Jenazah</option>
+              <option value="PENJAGA_MAKAM">5. Penjaga Makam</option>
             </select>
 
             {/* RW Filter */}
@@ -270,7 +283,7 @@ export const RecipientList: React.FC<RecipientListProps> = ({
                 {selectedRecipientIds.length}
               </span>
               <span className="text-xs font-semibold text-teal-900">
-                Guru Keagamaan Terpilih untuk Tindakan Masal
+                Penerima Terpilih untuk Tindakan Masal
               </span>
               <span className="text-xs text-teal-700 font-bold tabular-nums">
                 (Total Alokasi: Rp {(selectedRecipientIds.length * 500000).toLocaleString('id-ID')})
@@ -314,7 +327,7 @@ export const RecipientList: React.FC<RecipientListProps> = ({
           </button>
         </div>
         <span className="text-slate-400">
-          Menampilkan {filteredRecipients.length} dari {recipients.length} pengajar keagamaan
+          Menampilkan {filteredRecipients.length} dari {recipients.length} penerima honorarium (5 peran)
         </span>
       </div>
 

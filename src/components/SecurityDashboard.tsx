@@ -76,7 +76,7 @@ export const SecurityDashboard: React.FC<SecurityDashboardProps> = ({
               Pusat Keamanan Siber & Proteksi Data Pribadi
             </h2>
             <p className="text-xs text-teal-100 max-w-xl leading-relaxed">
-              Melindungi NIK 16 digit warga, data perbankan guru keagamaan, dan SPJ dana hibah dari pencurian data, scraping ilegal, kebocoran data, dan serangan brute-force.
+              Melindungi NIK 16 digit warga, data perbankan 5 peran penerima honorarium, dan SPJ dana hibah dari pencurian data, scraping ilegal, kebocoran data, dan serangan brute-force.
             </p>
           </div>
         </div>

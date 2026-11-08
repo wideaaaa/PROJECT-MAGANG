@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-normal">
-                Sistem Insentif Keagamaan Guru Ngaji & Guru Sekolah Minggu
+                Sistem Honorarium & Insentif 5 Peran Kelurahan Bandulan
               </p>
             </div>
           </div>
@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Cari nama guru, NIK tersamar, nama TPQ / gereja..."
+                placeholder="Cari nama, NIK, TPQ, gereja, masjid, makam, RW..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-300 rounded-[10px] text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-3 focus:ring-teal-700/15 focus:border-[#0f766e] transition-all"

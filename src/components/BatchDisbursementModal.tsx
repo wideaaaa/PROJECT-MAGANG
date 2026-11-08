@@ -83,10 +83,10 @@ export const BatchDisbursementModal: React.FC<BatchDisbursementModalProps> = ({
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-teal-200 bg-white/10 px-2 py-0.5 rounded">
-                Modul Pencairan Massal (SP2D / Payroll)
+                Modul Pencairan Massal (SP2D / Payroll Bank Jatim)
               </span>
               <h3 className="text-base sm:text-lg font-bold text-white mt-0.5">
-                Berita Acara Penyaluran Insentif Guru Keagamaan
+                Berita Acara Penyaluran Honorarium (5 Peran Kelurahan)
               </h3>
             </div>
           </div>
@@ -110,7 +110,7 @@ export const BatchDisbursementModal: React.FC<BatchDisbursementModalProps> = ({
                   Penyaluran Batch Berhasil Dibukukan!
                 </h4>
                 <p className="text-xs text-slate-500 max-w-md mx-auto">
-                  Sebanyak <strong>{targets.length} Pengajar Keagamaan</strong> telah disalurkan dengan total nominal <strong>Rp {totalNominal.toLocaleString('id-ID')}</strong> melalui {bankTarget}.
+                  Sebanyak <strong>{targets.length} Penerima Honor</strong> telah disalurkan dengan total nominal <strong>Rp {totalNominal.toLocaleString('id-ID')}</strong> melalui {bankTarget}.
                 </p>
                 <p className="font-mono text-xs text-teal-800 font-bold mt-2">
                   Nomor Berita Acara: {batchNumber}

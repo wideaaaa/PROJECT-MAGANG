@@ -194,7 +194,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 }`}
               >
                 <User className="w-4 h-4" />
-                <span>Pengajar Keagamaan</span>
+                <span>Penerima Honor (5 Peran)</span>
               </button>
 
               <button
@@ -212,16 +212,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             </div>
           </div>
 
-          {/* Body Portal 1: TEACHER / PENGAJAR */}
+          {/* Body Portal 1: PENERIMA HONOR (5 PERAN) */}
           {activePortal === 'TEACHER' && (
             <div className="p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
                 <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-[#0f766e]" />
-                  Masuk ke Portal Guru Keagamaan
+                  Masuk ke Portal Penerima Honorarium
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Untuk Guru Ngaji (TPQ/Madrasah Diniyah) & Guru Sekolah Minggu se-Kelurahan Bandulan.
+                  Untuk 5 peran: Guru TPQ, Guru Sekolah Minggu, Penjaga Tempat Ibadah (Marbot), Perawat Jenazah, & Penjaga Makam.
                 </p>
               </div>
 
@@ -251,7 +251,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    PIN / Kata Sandi Pengajar
+                    PIN / Kata Sandi Akses Masuk
                   </label>
                   <div className="relative">
                     <input
@@ -268,19 +268,19 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   type="submit"
                   className="w-full py-3 bg-[#0f766e] hover:bg-[#0d9488] active:bg-[#115e59] text-white text-xs sm:text-sm font-bold rounded-[10px] shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Masuk ke Dashboard Guru</span>
+                  <span>Masuk ke Dashboard Akun Saya</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
 
-              {/* Fitur Daftar Mandiri Pengajar Keagamaan Baru */}
+              {/* Fitur Daftar Mandiri Her-Registrasi 2027 */}
               <div className="bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200/90 rounded-2xl p-4 text-center space-y-2 shadow-2xs">
                 <div className="flex items-center justify-center gap-2 text-xs font-bold text-teal-950">
                   <UserPlus className="w-4 h-4 text-[#0f766e]" />
-                  <span>Belum Terdaftar Sebagai Penerima Insentif?</span>
+                  <span>Belum Terdata Her-Registrasi 2027?</span>
                 </div>
                 <p className="text-[11px] text-teal-800/90 leading-relaxed max-w-sm mx-auto">
-                  Pengajar TPQ, Madrasah Diniyah, Sekolah Minggu, Pasraman & Vihara di Kelurahan Bandulan dapat mendaftarkan diri secara mandiri.
+                  Daftarkan diri secara mandiri untuk Guru TPQ, Guru Sekolah Minggu, Penjaga Tempat Ibadah (Marbot), Perawat Jenazah, atau Penjaga Makam Kelurahan Bandulan.
                 </p>
                 <button
                   type="button"
@@ -288,17 +288,17 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   className="w-full py-2.5 bg-white hover:bg-teal-50 text-[#0f766e] font-bold text-xs rounded-[10px] border border-teal-300 shadow-2xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <UserPlus className="w-3.5 h-3.5" />
-                  <span>Daftar Mandiri Guru Keagamaan Baru →</span>
+                  <span>Daftar Mandiri Her-Registrasi 2027 (5 Peran) →</span>
                 </button>
               </div>
 
-              {/* Demo Fast Login Chips for Testing */}
+              {/* Demo Fast Login Chips across the 5 roles */}
               <div className="pt-2 border-t border-slate-100 space-y-2.5">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Pilih Cepat Akun Guru untuk Uji Coba:
+                  Coba Masuk Cepat per Peran (Demo 5 Role):
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {recipients.slice(0, 4).map((r) => (
+                  {recipients.slice(0, 6).map((r) => (
                     <button
                       key={r.id}
                       type="button"
@@ -315,7 +315,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                           {r.nama}
                         </p>
                         <p className="text-[10px] text-slate-500 truncate">
-                          {r.kategori === 'GURU_NGAJI' ? 'TPQ' : 'Sekolah Minggu'} • {r.rw}
+                          {r.kategoriLabel} • {r.rw}
                         </p>
                       </div>
                     </button>
