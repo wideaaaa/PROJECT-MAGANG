@@ -37,6 +37,7 @@ interface TeacherPortalViewProps {
   onReuploadDocument: (teacherId: string, docId: string, docName: string) => void;
   onSwitchToAdmin: () => void;
   selectedPeriod: string;
+  onOpenEditProfile?: () => void;
 }
 
 export const TeacherPortalView: React.FC<TeacherPortalViewProps> = ({
@@ -47,6 +48,7 @@ export const TeacherPortalView: React.FC<TeacherPortalViewProps> = ({
   onReuploadDocument,
   onSwitchToAdmin,
   selectedPeriod,
+  onOpenEditProfile,
 }) => {
   const currentRecipient = recipients.find((r) => r.id === activeTeacherId) || recipients[0];
 
@@ -246,6 +248,20 @@ export const TeacherPortalView: React.FC<TeacherPortalViewProps> = ({
               </span>
               <QrCode className="w-5 h-5 text-teal-100" />
             </div>
+
+            {/* Edit Profil & Rekening CTA */}
+            {onOpenEditProfile && (
+              <div className="mt-3 pt-3 border-t border-white/15">
+                <button
+                  type="button"
+                  onClick={onOpenEditProfile}
+                  className="w-full py-2.5 px-3 bg-white/15 hover:bg-white/25 active:bg-white/30 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/25 shadow-xs"
+                >
+                  <User className="w-3.5 h-3.5 text-teal-200" />
+                  <span>Edit Profil & Data Rekening</span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Teacher Navigation Subtabs */}

@@ -18,6 +18,7 @@ import { AuthScreen } from './components/AuthScreen';
 import { SecurityDashboard } from './components/SecurityDashboard';
 import { LockScreenModal } from './components/LockScreenModal';
 import { MonthlyRealizationReport } from './components/MonthlyRealizationReport';
+import { EditProfileModal } from './components/EditProfileModal';
 
 import { INITIAL_RECIPIENTS, INITIAL_AUDIT_LOGS } from './data/mockRecipients';
 import { INITIAL_SECURITY_INCIDENTS } from './utils/security';
@@ -78,6 +79,7 @@ export default function App() {
   const [detailRecipient, setDetailRecipient] = useState<Recipient | null>(null);
   const [isBatchModalOpen, setIsBatchModalOpen] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState<boolean>(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
   // Notification Toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -87,6 +89,52 @@ export default function App() {
     setTimeout(() => {
       setToastMessage(null);
     }, 3500);
+  };
+
+  // Handler for updating user profile
+  const handleSaveProfile = (updatedUser: Partial<AuthUser>, updatedRecipient?: Partial<Recipient>) => {
+    // 1. Update currentUser session
+    setCurrentUser((prev) => {
+      if (!prev) return prev;
+      return { ...prev, ...updatedUser };
+    });
+
+    // 2. If updatedRecipient provided or teacherId exists, update recipient state
+    const targetTeacherId = currentUser?.teacherId || activeTeacherId;
+    if (updatedRecipient && targetTeacherId) {
+      setRecipients((prev) =>
+        prev.map((r) => {
+          if (r.id === targetTeacherId) {
+            return { ...r, ...updatedRecipient };
+          }
+          return r;
+        })
+      );
+    }
+
+    // 3. Record Audit Log for UU PDP compliance
+    const timeNow = new Date().toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }) + ' WIB';
+
+    const newLog: AuditLog = {
+      id: `LOG-${Date.now()}`,
+      timestamp: timeNow,
+      actorName: updatedUser.name || currentUser?.name || 'Pengguna SIKB',
+      actorRole: currentUser?.roleTitle || 'Pengguna',
+      action: 'Pembaruan Profil & Data Akun Mandiri',
+      recipientId: targetTeacherId || currentUser?.id || 'USER-01',
+      recipientName: updatedUser.name || currentUser?.name || 'Pengguna',
+      hash: `SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+      notes: `Profil berhasil diperbarui secara mandiri oleh pemilik akun sesuai standar UU PDP No. 27/2022.`,
+    };
+
+    setAuditLogs((prev) => [newLog, ...prev]);
+    showToast('Profil dan data akun berhasil disimpan!');
   };
 
   // Handler for teacher logging attendance
@@ -491,6 +539,7 @@ export default function App() {
           onLogout={handleLogout}
           onLockSession={() => setIsSessionLocked(true)}
           onOpenSecurityCenter={() => setActiveTab('SECURITY')}
+          onOpenEditProfile={() => setIsEditProfileOpen(true)}
           sessionRemainingSeconds={sessionRemainingSeconds}
           currentRole={currentRole}
           onRoleChange={(role) => {
@@ -570,6 +619,7 @@ export default function App() {
             onCategoryFilterChange={setCategoryFilter}
             rwFilter={rwFilter}
             onRwFilterChange={setRwFilter}
+            selectedPeriod={selectedPeriod}
           />
         )}
 
@@ -619,6 +669,7 @@ export default function App() {
               onCategoryFilterChange={setCategoryFilter}
               rwFilter={rwFilter}
               onRwFilterChange={setRwFilter}
+              selectedPeriod={selectedPeriod}
             />
           </div>
         )}
@@ -635,6 +686,7 @@ export default function App() {
               setActiveTab('DASHBOARD');
             }}
             selectedPeriod={selectedPeriod}
+            onOpenEditProfile={() => setIsEditProfileOpen(true)}
           />
         )}
 
@@ -707,6 +759,15 @@ export default function App() {
         isOpen={isRegisterModalOpen}
         onClose={() => setIsRegisterModalOpen(false)}
         onRegisterRecipient={handleRegisterRecipient}
+      />
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        isOpen={isEditProfileOpen}
+        onClose={() => setIsEditProfileOpen(false)}
+        currentUser={currentUser}
+        currentRecipient={recipients.find((r) => r.id === (currentUser?.teacherId || activeTeacherId)) || recipients[0]}
+        onSaveProfile={handleSaveProfile}
       />
 
       {/* Municipal Civic Footer */}

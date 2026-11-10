@@ -20,6 +20,7 @@ interface HeaderProps {
   onLogout: () => void;
   onLockSession?: () => void;
   onOpenSecurityCenter?: () => void;
+  onOpenEditProfile?: () => void;
   sessionRemainingSeconds?: number;
   currentRole: 'ADMIN_KESRA' | 'LURAH' | 'GURU_MANDIRI';
   onRoleChange: (role: 'ADMIN_KESRA' | 'LURAH' | 'GURU_MANDIRI') => void;
@@ -37,6 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
   onLogout,
   onLockSession,
   onOpenSecurityCenter,
+  onOpenEditProfile,
   sessionRemainingSeconds = 900,
   currentRole,
   onRoleChange,
@@ -134,16 +136,25 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center justify-between md:justify-end gap-2.5 shrink-0">
             {currentUser ? (
               <div className="flex items-center gap-2">
-                {/* User Info Capsule */}
-                <div className="flex items-center gap-2.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
-                  <img
-                    src={currentUser.avatarUrl}
-                    alt={currentUser.name}
-                    className="w-8 h-8 rounded-full object-cover border border-slate-300 shrink-0"
-                  />
+                {/* User Info Capsule (Click to Edit Profile) */}
+                <div 
+                  onClick={onOpenEditProfile}
+                  className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100/90 border border-slate-200 hover:border-teal-400 px-3 py-1.5 rounded-xl cursor-pointer transition-all group"
+                  title="Klik untuk Edit Profil & Pengaturan Akun"
+                >
+                  <div className="relative">
+                    <img
+                      src={currentUser.avatarUrl}
+                      alt={currentUser.name}
+                      className="w-8 h-8 rounded-full object-cover border border-slate-300 group-hover:border-teal-500 shrink-0 transition-colors"
+                    />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#0f766e] text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <User className="w-2 h-2" />
+                    </div>
+                  </div>
                   <div className="text-left hidden sm:block">
                     <div className="flex items-center gap-1.5">
-                      <p className="text-xs font-bold text-slate-900 leading-tight">
+                      <p className="text-xs font-bold text-slate-900 group-hover:text-[#0f766e] transition-colors leading-tight">
                         {currentUser.name}
                       </p>
                       <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.2 rounded-full border ${
@@ -154,13 +165,29 @@ export const Header: React.FC<HeaderProps> = ({
                         {currentUser.role === 'TEACHER' ? 'Guru' : currentUser.role === 'LURAH' ? 'Lurah' : 'Kasi Kesra'}
                       </span>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-medium">
-                      {currentUser.role === 'TEACHER'
-                        ? `${currentUser.institution || 'Pengajar'} • ${currentUser.rw || 'Bandulan'}`
-                        : currentUser.roleTitle}
+                    <p className="text-[10px] text-slate-500 font-medium flex items-center gap-1">
+                      <span>
+                        {currentUser.role === 'TEACHER'
+                          ? `${currentUser.institution || 'Pengajar'} • ${currentUser.rw || 'Bandulan'}`
+                          : currentUser.roleTitle}
+                      </span>
+                      <span className="text-teal-600 font-bold opacity-0 group-hover:opacity-100 transition-opacity text-[9px] underline">
+                        Edit
+                      </span>
                     </p>
                   </div>
                 </div>
+
+                {/* Edit Profile Button */}
+                {onOpenEditProfile && (
+                  <button
+                    onClick={onOpenEditProfile}
+                    className="p-2 text-slate-600 hover:text-[#0f766e] bg-slate-100 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 rounded-[10px] transition-colors cursor-pointer"
+                    title="Edit Profil & Pengaturan Akun"
+                  >
+                    <User className="w-3.5 h-3.5" />
+                  </button>
+                )}
 
                 {/* Session Security Indicator */}
                 <div 

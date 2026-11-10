@@ -20,10 +20,12 @@ import {
   ShieldCheck,
   Download,
   Send,
-  ExternalLink
+  ExternalLink,
+  FileSpreadsheet
 } from 'lucide-react';
 import { Recipient, DisbursementStatus, ReligiousCategory } from '../types';
 import { RW_LIST } from '../data/mockRecipients';
+import { exportRecipientsToXLSX } from '../utils/excelExport';
 
 interface RecipientListProps {
   recipients: Recipient[];
@@ -39,6 +41,7 @@ interface RecipientListProps {
   onCategoryFilterChange: (category: string) => void;
   rwFilter: string;
   onRwFilterChange: (rw: string) => void;
+  selectedPeriod?: string;
 }
 
 export const RecipientList: React.FC<RecipientListProps> = ({
@@ -55,10 +58,32 @@ export const RecipientList: React.FC<RecipientListProps> = ({
   onCategoryFilterChange,
   rwFilter,
   onRwFilterChange,
+  selectedPeriod = 'November 2026',
 }) => {
   const [viewMode, setViewMode] = useState<'CARDS' | 'TABLE'>('CARDS');
   const [bankFilter, setBankFilter] = useState<string>('ALL');
   const [sortBy, setSortBy] = useState<'NAMA' | 'RW' | 'STATUS'>('NAMA');
+
+  // Handle Export to XLSX
+  const handleExportXlsx = (mode: 'ALL' | 'FILTERED' | 'SELECTED') => {
+    let dataToExport = filteredRecipients;
+    let prefix = 'Penerima_Insentif_Bandulan';
+
+    if (mode === 'SELECTED' && selectedRecipientIds.length > 0) {
+      dataToExport = recipients.filter((r) => selectedRecipientIds.includes(r.id));
+      prefix = 'Penerima_Terpilih_Bandulan';
+    } else if (mode === 'ALL') {
+      dataToExport = recipients;
+      prefix = 'Master_Penerima_Insentif_5Peran_Bandulan';
+    } else {
+      if (categoryFilter !== 'ALL') prefix += `_${categoryFilter}`;
+      if (rwFilter !== 'ALL') prefix += `_${rwFilter.replace(/\s+/g, '')}`;
+    }
+
+    exportRecipientsToXLSX(dataToExport, prefix, {
+      period: selectedPeriod,
+    });
+  };
 
   // Filter logic
   const filteredRecipients = recipients.filter((recipient) => {
@@ -272,6 +297,19 @@ export const RecipientList: React.FC<RecipientListProps> = ({
                 <option value="STATUS">Urutkan: Status</option>
               </select>
             </div>
+
+            {/* Export XLSX Button */}
+            <button
+              onClick={() => handleExportXlsx('FILTERED')}
+              className="h-10 px-3.5 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-xs font-bold rounded-[10px] shadow-xs transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+              title="Ekspor Seluruh Data Penerima Terfilter ke File Excel (.xlsx)"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5" />
+              <span>Ekspor XLSX</span>
+              <span className="text-[10px] font-semibold bg-emerald-800/80 px-1.5 py-0.5 rounded">
+                {filteredRecipients.length}
+              </span>
+            </button>
           </div>
         </div>
 
@@ -291,6 +329,14 @@ export const RecipientList: React.FC<RecipientListProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleExportXlsx('SELECTED')}
+                className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-[10px] shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                title="Unduh data yang dipilih dalam format Excel (.xlsx)"
+              >
+                <FileSpreadsheet className="w-3.5 h-3.5" />
+                <span>Unduh XLSX Terpilih ({selectedRecipientIds.length})</span>
+              </button>
               <button
                 onClick={onOpenBatchDisbursementWithSelection}
                 className="px-3.5 py-1.5 bg-[#d97706] hover:bg-[#b45309] text-white text-xs font-semibold rounded-[10px] shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"

@@ -31,6 +31,8 @@ export interface AuthUser {
   rw?: string;
   institution?: string;
   honorRole?: HonorRole;
+  phone?: string;
+  email?: string;
 }
 
 export interface AttendanceRecord {

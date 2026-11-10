@@ -22,6 +22,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { Recipient, HonorRole, AuthUser } from '../types';
+import { exportRecipientsToXLSX } from '../utils/excelExport';
 
 interface MonthlyRealizationReportProps {
   recipients: Recipient[];
@@ -291,6 +292,15 @@ export const MonthlyRealizationReport: React.FC<MonthlyRealizationReportProps> =
             >
               <Download className="w-3.5 h-3.5 text-teal-600" />
               <span>Unduh CSV</span>
+            </button>
+
+            <button
+              onClick={() => exportRecipientsToXLSX(filteredNominativeRecipients, 'Laporan_Realisasi_Insentif_Bandulan', { period })}
+              className="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              title="Unduh Buku Kerja Excel (.xlsx) Lengkap dengan Rekapitulasi 5 Peran"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5" />
+              <span>Ekspor XLSX (Excel)</span>
             </button>
 
             <button
